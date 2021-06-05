@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -15,7 +16,7 @@ const { NotFoundError } = require('./errors/index');
 const auth = require('./middlewares/auth');
 
 const app = express();
-const PORT = 3001;
+const { PORT = 3001 } = process.env;
 app.use(express.json());
 app.use(cors({
   origin: true,
@@ -43,4 +44,6 @@ app.use((req, res, next) => {
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+  console.log(PORT);
+});
