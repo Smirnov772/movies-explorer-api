@@ -16,7 +16,7 @@ const { NotFoundError } = require('./errors/index');
 const auth = require('./middlewares/auth');
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3002 } = process.env;
 app.use(express.json());
 app.use(cors({
   origin: true,
@@ -44,6 +44,4 @@ app.use((req, res, next) => {
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
-app.listen(PORT, () => {
-  console.log(PORT);
-});
+app.listen(PORT, () => {});
