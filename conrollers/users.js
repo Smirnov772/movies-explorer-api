@@ -64,16 +64,13 @@ const getCurrentUser = (req, res, next) => {
       }
       res.send(users);
     })
-    .catch((err) => {
-      if (err.kind === 'ObjectId') {
-        next(new BadRequestError('Передан некорректный _id.'));
-      }
+    .catch(() => {
       next(new ServerError('Ошибка сервера.'));
     });
 };
 const updateUsers = (req, res, next) => {
-  const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true })
     .then((users) => {
       if (!users) {
         throw new BadRequestError(' Пользователь с указанным _id не найден.');
@@ -84,7 +81,13 @@ const updateUsers = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(
           new BadRequestError(
-            'Переданы некорректные данные при обновлении пользователя.',
+            'Переданы некорректные данные при обновлении имени пользователя.',
+          ),
+        );
+      } else if (err.email === 'ValidationError') {
+        next(
+          new BadRequestError(
+            'Переданы некорректные данные при обновлении email пользователя.',
           ),
         );
       }

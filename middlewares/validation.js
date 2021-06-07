@@ -89,10 +89,15 @@ const validateUpdateUser = celebrate({
       .min(2)
       .max(30)
       .required(),
-    about: Joi.string()
-      .min(2)
-      .max(30)
-      .required(),
+    email: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (validator.isEmail(value)) {
+          return value;
+        }
+        return helpers.message('Не корректный email');
+      })
+      .message({ 'any.required': 'Обязательное поле' }),
   }),
 });
 

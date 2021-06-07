@@ -1,19 +1,14 @@
 require('dotenv').config();
+
+const { NODE_ENV, DB_CONNECTION_STRING } = process.env;
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
-const usersRouter = require('./routes/users');
-const moviesRouter = require('./routes/movies');
 const errorHandler = require('./middlewares/error-handler');
-const {
-  validateRegisterBody,
-  validateRegistration,
-} = require('./middlewares/validation');
-const { createUser, login } = require('./conrollers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { NotFoundError } = require('./errors/index');
-const auth = require('./middlewares/auth');
+const { router } = require('./routes');
 
 const app = express();
 const { PORT = 3002 } = process.env;
@@ -23,7 +18,7 @@ app.use(cors({
   exposedHeaders: '*',
   credentials: true,
 }));
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? DB_CONNECTION_STRING : 'mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -31,12 +26,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use(requestLogger);
-
-app.post('/signin', validateRegisterBody, login);
-app.post('/signup', validateRegistration, createUser);
-
-app.use('/users', auth, usersRouter);
-app.use('/movies', auth, moviesRouter);
+app.use(router);
 
 app.use((req, res, next) => {
   next(new NotFoundError('ресурс не найден'));

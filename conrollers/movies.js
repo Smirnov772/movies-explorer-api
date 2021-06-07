@@ -77,7 +77,8 @@ const deleteMovies = (req, res, next) => {
     .catch((err) => {
       if (err.kind === 'ObjectId') {
         next(new BadRequestError('Передан некорректный _id.'));
-      } else { next(err); }
+      }
+      next(new ServerError('Ошибка сервера.'));
     });
 };
 
