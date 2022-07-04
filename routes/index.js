@@ -6,12 +6,14 @@ const auth = require('../middlewares/auth');
 
 const {
   validateRegisterBody,
-  validateRegistration,
+ // validateRegistration,
 } = require('../middlewares/validation');
 const { createUser, login } = require('../conrollers/users');
 
 router.post('/signin', validateRegisterBody, login);
-router.post('/signup', validateRegistration, createUser);
+router.post('/signup',
+// validateRegistration, 
+ createUser);
 
 router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);
