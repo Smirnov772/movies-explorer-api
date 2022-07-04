@@ -11,7 +11,7 @@ const { NotFoundError } = require('./errors/index');
 const { router } = require('./routes');
 
 const app = express();
-const { PORT = 3002 } = process.env;
+const { PORT = 3000 } = process.env;
 app.use(express.json());
 app.use(cors({
   origin: true,
