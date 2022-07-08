@@ -13,7 +13,7 @@ const { createUser, login } = require('../conrollers/users');
 router.post('/api/signin', validateRegisterBody, login);
 router.post('/api/signup', validateRegistration, createUser);
 
-router.use('/api/users', auth, usersRouter);
-router.use('/api/movies', auth, moviesRouter);
+router.use('/users', auth, usersRouter);
+router.use('/movies', auth, moviesRouter);
 
 exports.router = router;

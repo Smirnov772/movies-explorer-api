@@ -7,7 +7,7 @@ const {
   updateUsers,
 } = require('../conrollers/users');
 
-usersRouter.get('/api/me', getCurrentUser);
-usersRouter.patch('/api/me', validateUpdateUser, updateUsers);
+usersRouter.get('/me', getCurrentUser);
+usersRouter.patch('/me', validateUpdateUser, updateUsers);
 
 exports.usersRouter = usersRouter;
