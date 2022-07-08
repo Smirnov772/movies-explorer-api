@@ -9,8 +9,8 @@ const {
   deleteMovies,
 } = require('../conrollers/movies');
 
-moviesRouter.get('/', getMovies);
-moviesRouter.post('/', validateCreateMovie, createMovies);
-moviesRouter.delete('/:movieId', validationObject, deleteMovies);
+moviesRouter.get('/api/', getMovies);
+moviesRouter.post('/api/', validateCreateMovie, createMovies);
+moviesRouter.delete('/api/:movieId', validationObject, deleteMovies);
 
 exports.moviesRouter = moviesRouter;
