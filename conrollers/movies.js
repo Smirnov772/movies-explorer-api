@@ -7,6 +7,7 @@ const {
 } = require('../errors/index');
 
 const getMovies = (req, res, next) => {
+  
   Movie.find({})
     .then((movie) => res.send(movie))
     .catch(() => next(new ServerError('Ошибка сервера.')));

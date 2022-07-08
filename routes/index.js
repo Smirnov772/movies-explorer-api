@@ -10,10 +10,10 @@ const {
 } = require('../middlewares/validation');
 const { createUser, login } = require('../conrollers/users');
 
-router.post('/signin', validateRegisterBody, login);
-router.post('/signup', validateRegistration, createUser);
+router.post('/api/signin', validateRegisterBody, login);
+router.post('/api/signup', validateRegistration, createUser);
 
-router.use('/users', auth, usersRouter);
-router.use('/movies', auth, moviesRouter);
+router.use('/api/users', auth, usersRouter);
+router.use('/api/movies', auth, moviesRouter);
 
 exports.router = router;
